@@ -12,8 +12,6 @@ android:
     - android-sdk-preview-license-52d11cd2
  
 before_install:
-# workaround for travis-ci/travis-ci#2279
-  - 'sudo mv /usr/local/android-sdk/tools/android-* /usr/local/bin'
   # Accept all licenses (workaround for travis-ci/travis-ci#2466)
   # Upgrade 'platform-tools' before 'tools' (workaround for travis-ci/travis-ci#2470)
   # Run dinstinct 'android update sdk' commands
