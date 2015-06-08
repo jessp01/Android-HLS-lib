@@ -1,4 +1,4 @@
-language: java
+language: android
 jdk: oraclejdk7
 
 env:
@@ -12,6 +12,15 @@ android:
     - android-sdk-preview-license-52d11cd2
  
 before_install:
+# workaround for travis-ci/travis-ci#2279
+  - 'sudo mv /usr/local/android-sdk/tools/android-* /usr/local/bin'
+  # Accept all licenses (workaround for travis-ci/travis-ci#2466)
+  # Upgrade 'platform-tools' before 'tools' (workaround for travis-ci/travis-ci#2470)
+  # Run dinstinct 'android update sdk' commands
+  - "android-update-sdk --components='platform-tools,tools' --accept-licenses='.+'"
+  - "android-update-sdk --components='build-tools-20.0.0' --accept-licenses='.+'"
+  - "android-update-sdk --components='android-20' --accept-licenses='.+'"
+  - "android-update-sdk --components='extra-android-m2repository,extra-google-m2repository' --accept-licenses='.+'"
   # required libs for android build tools
   - sudo apt-get update
   - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
