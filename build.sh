@@ -1,6 +1,6 @@
 #!/bin/sh -x
 set -e
-cd Android-HLS-lib
+cd /home/travis/build/jessp01/Android-HLS-lib
 pwd
   # required libs for android build tools
 sudo apt-get update
