@@ -1,5 +1,7 @@
 #!/bin/sh -x
 set -e
+cd Android-HLS-lib
+pwd
   # required libs for android build tools
 sudo apt-get update
 sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
