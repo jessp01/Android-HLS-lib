@@ -13,14 +13,14 @@ export TERM=dumb
 #export PATH=$GRADLE_HOME/bin:$PATH
   #- chmod +x gradlew
   # newest Android SDK 22.3
-#wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
-#tar -zxf android-sdk_r22.3-linux.tgz
+wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
+tar zxf android-sdk_r24.2-linux.tgz
 NDK_VER=r9c
 export ANDROID_HOME=`pwd`/android-sdk-linux
 export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 # newest Android NDK
 wget http://dl.google.com/android/ndk/android-ndk-$NDK_VER-linux-x86_64.tar.bz2
-tar jvxf android-ndk-$NDK_VER-linux-x86_64.tar.bz2
+tar jxf android-ndk-$NDK_VER-linux-x86_64.tar.bz2
 export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VER
 export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
   # manually set sdk.dir variable, according to local paths
