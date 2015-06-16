@@ -21,7 +21,7 @@ export ANDROID_HOME=`pwd`/android-sdk-linux
 export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
   # newest Android NDK
 if [ `uname -m` = x86_64 ]; then wget http://dl.google.com/android/ndk/android-ndk-$NDK_VER-linux-x86_64.tar.bz2 -O ndk.tgz; else wget http://dl.google.com/android/ndk/android-ndk-$NDK_VER-linux-x86.tar.bz2 -O ndk.tgz; fi
-#tar -xf ndk.tgz
+tar -xf ndk.tgz
 export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VER
 export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
   # manually set sdk.dir variable, according to local paths
