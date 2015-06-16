@@ -13,4 +13,4 @@ jdk: oraclejdk7
  
 
 script:
-    ./build.sh
+    sudo ./build.sh
