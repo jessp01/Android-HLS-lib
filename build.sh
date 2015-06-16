@@ -26,8 +26,8 @@ export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VER
 export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
   # manually set sdk.dir variable, according to local paths
 echo "sdk.dir=$ANDROID_HOME" > local.properties
-(while :; do echo 'y'; sleep 2; done) | ${ANDROID_HOME}/tools/android update sdk -a -t tools,platform-tools,extra-android-support,extra-android-m2repository,android-20,build-tools-20.0.0,extra-google-google_play_services,extra-google-m2repository --force --no-ui
-(while :; do echo 'y'; sleep 2; done) | ${ANDROID_HOME}/tools/android update sdk -u
+(while :; do echo 'y'; sleep 2; done) | android update sdk -a -t tools,platform-tools,extra-android-support,extra-android-m2repository,android-20,build-tools-20.0.0,extra-google-google_play_services,extra-google-m2repository --force --no-ui
+(while :; do echo 'y'; sleep 2; done) | android update sdk -u
 export NDK_PROJECT_PATH=`pwd`/HLSPlayerSDK/
 sed -i "s@\${aapt}@${ANDROID_HOME}/tools/aapt@g" `pwd`/android-sdk-linux/tools/ant/build.xml
 sed -i s#@NDK_BUILD_PATH@#`pwd`/android-ndk-$NDK_VER/ndk-build#g build.xml
