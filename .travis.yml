@@ -11,8 +11,8 @@ android:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
-before_install:
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
+#before_install:
+#    - sudo apt-get update -qq
+#    - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
 script:
     sudo ./build.sh
