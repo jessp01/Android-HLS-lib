@@ -1,52 +1,43 @@
 language: java
-jdk:
-  - oraclejdk8
+jdk: oraclejdk7
+env:
+  matrix:
+    - ANDROID_SDKS=android-19,sysimg-19  ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 before_install:
+  # Install base Android SDK
+  - sudo apt-get update -qq
+  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
+  - wget http://dl.google.com/android/android-sdk_r22.3-linux.tgz
+  - tar xzf android-sdk_r22.3-linux.tgz
+  - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
- # Download the SDK
- - wget http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
- - tar -zxf android-sdk_r23.0.2-linux.tgz
- - export ANDROID_HOME=`pwd`/android-sdk-linux
- - NDK_VER=r9c
- - wget http://dl.google.com/android/ndk/android-ndk-$NDK_VER-linux-x86_64.tar.bz2
- - tar jxf android-ndk-$NDK_VER-linux-x86_64.tar.bz2
- - export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VER
- - export PATH=${PATH}:${ANDROID_NDK_HOME}
-  # manually set sdk.dir variable, according to local paths
- - echo "sdk.dir=$ANDROID_HOME" > `pwd`/HLSPlayerSDK/local.properties
- - export NDK_PROJECT_PATH=`pwd`/HLSPlayerSDK/
- - sed -i "s@\${aapt}@${ANDROID_HOME}/tools/aapt@g" `pwd`/android-sdk-linux/tools/ant/build.xml
- - sed -i s#@NDK_BUILD_PATH@#`pwd`/android-ndk-$NDK_VER/ndk-build#g build.xml
+  # Gradle
+  - wget http://services.gradle.org/distributions/gradle-1.10-bin.zip
+  - unzip gradle-1.10-bin.zip
+  - export GRADLE_HOME=$PWD/gradle-1.10
+  - export PATH=$GRADLE_HOME/bin:$PATH
 
- # Set the $PATH so all the tools like dx,aapt etc work
- - export PATH=$PATH:$ANDROID_HOME/tools
- - export PATH=$PATH:$ANDROID_HOME/platform-tools
- - export PATH=$PATH:$ANDROID_HOME/build-tools
+  # install android build tools
+  - wget https://dl-ssl.google.com/android/repository/build-tools_r19.0.1-linux.zip
+  - unzip build-tools_r19.0.1-linux.zip -d $ANDROID_HOME
+  - mkdir -p $ANDROID_HOME/build-tools/
+  - mv $ANDROID_HOME/android-4.4.2 $ANDROID_HOME/build-tools/19.0.1
 
- - sudo apt-get install expect
+  # Install required components.
+  # For a full list, run `android list sdk -a --extended`
+  # Note that sysimg-18 downloads the ARM, x86 and MIPS images (we should optimize this).
+  # Other relevant API's
+  - echo yes | android update sdk --filter platform-tools --no-ui --force > /dev/null
+  - echo yes | android update sdk --filter android-18 --no-ui --force > /dev/null
+  - echo yes | android update sdk --filter android-19 --no-ui --force > /dev/null
+  - echo yes | android update sdk --filter sysimg-19 --no-ui --force > /dev/null
+  - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
+  - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 
- - echo $PWD
-
- - license_accepted_android update sdk --force -u -t platform-tools
-
- # this command requires platform-tools installed first to work
- - android list sdk -a -u -e
-
- # actually get the packages we want
- - license_accepted_android update sdk --force -a -u -t tools,platform-tools,build-tools-21.1.1,android-10,extra-android-support
-
- # useful information to debug problems with previous steps
- - ls -lah ${ANDROID_HOME}
- - ls -lah ${ANDROID_HOME}/platforms
- - ls -lah ${ANDROID_HOME}/build-tools
- - ls -lah ${ANDROID_HOME}/tools
- - ls -lah ${ANDROID_HOME}/platform-tools
-
-
-# Do this last because it takes so damn long, it's quicker to iterate on
- # refinements to prior section
- - sudo apt-get update
- - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
+  # Create and start emulator
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
  - cd HLSPlayerSDK &&  ndk-build && ant release
