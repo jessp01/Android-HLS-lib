@@ -12,6 +12,4 @@ export PATH=${PATH}:${ANDROID_NDK_HOME}
 export NDK_PROJECT_PATH=`pwd`/HLSPlayerSDK/
 #sed -i "s@\${aapt}@${ANDROID_HOME}/tools/aapt@g" `pwd`/android-sdk-linux/tools/ant/build.xml
 sed -i s#@NDK_BUILD_PATH@#`pwd`/android-ndk-$NDK_VER/ndk-build#g build.xml
-echo $ANDROID_HOME
-sudo which android
 cd HLSPlayerSDK &&  ndk-build && ant release
