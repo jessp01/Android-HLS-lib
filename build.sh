@@ -3,7 +3,7 @@ set -e
 # newest Android NDK
 NDK_VER=r9c
 wget http://dl.google.com/android/ndk/android-ndk-$NDK_VER-linux-x86_64.tar.bz2
-tar jxf android-ndk-$NDK_VER-linux-x86_64.tar.bz2
+tar jxvf android-ndk-$NDK_VER-linux-x86_64.tar.bz2
 export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VER
 export PATH=${PATH}:${ANDROID_NDK_HOME}
   # manually set sdk.dir variable, according to local paths
