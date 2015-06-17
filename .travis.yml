@@ -1,16 +1,18 @@
-language: java 
-jdk: oraclejdk7
+language: android
+android:
+  components:
+    - build-tools-20.0.0
+    - android-L
+    - sys-img-x86-android-tv-l
+    - add-on
+    - extra
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
-#env:
-#  matrix:
-#    - ANDROID_SDKS=android-19,sysimg-19 ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
-#android:
-#  components:
-#    - build-tools-20.0.0
-#  licenses:
-#    - android-sdk-license-5be876d5
-#    - android-sdk-preview-license-52d11cd2
- 
-
+before_install:
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
 script:
     sudo ./build.sh
